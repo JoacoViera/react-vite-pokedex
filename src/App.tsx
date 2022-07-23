@@ -1,8 +1,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
-import PokemonPage from "./Pages/PokemonPage";
-import ListPokemonsPage from "./Pages/ListPokemonsPage";
+import { PokemonPage, ListPokemonsPage } from "./Pages";
 
 const queryClient = new QueryClient();
 
