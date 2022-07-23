@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const getPokemon = async (pokemon: string) => {
+const getPokemon = async ({ queryKey }: any) => {
 	try {
-		const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+		const url = `https://pokeapi.co/api/v2/pokemon/${queryKey[1]}`;
 		const { data } = await axios.get(url);
 		return data;
 	} catch (error) {
-		return null;
+		return [];
 	}
 };
 

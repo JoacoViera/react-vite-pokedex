@@ -1,61 +1,84 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import getPokemon from "../api/index";
 
 function PokemonPage() {
-	const [pokemonName, setPokemonName] = useState("charmander");
+	const [pokemonName, setPokemonName] = useState<number | string>(
+		"charmander"
+	);
+	const [search, setSearch] = useState("");
 	const { data, isLoading, refetch, isError } = useQuery(
 		["GET_POKEMON", pokemonName],
-		async () => getPokemon(pokemonName),
+		getPokemon,
 		{
-			onSuccess: (result) => {
-				console.log("result", result);
+			onSuccess: (successData) => {
+				if (successData?.count > 1) {
+					const randomIndex = Math.floor(Math.random() * 50);
+					setPokemonName(randomIndex);
+				}
 			},
-			onError: (error) => {
-				console.log("error pa", error);
-			},
-			enabled: false,
 		}
 	);
-	useEffect(() => {
-		refetch();
-	}, []);
 
 	const handleInput = (event: any) => {
 		const { name, value } = event.target;
 		if (name === "pokemon-name") {
-			setPokemonName(value);
+			setSearch(value);
 		}
 	};
 
-	if (isLoading || isError) {
+	if (isError || data?.length === 0) {
+		return (
+			<div className="flex flex-col justify-center items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+				<p className=" font-normal text-gray-700 dark:text-gray-400  ">
+					Something goes wront
+				</p>
+
+				<button
+					type="button"
+					className="text-white right-2.5 mt-10 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+					onClick={() => {
+						setPokemonName("charmander");
+						setSearch("");
+						refetch();
+					}}
+				>
+					Try Again
+				</button>
+			</div>
+		);
+	}
+
+	if (isLoading) {
 		return <h1 className="text-white text-lg">LOADING...</h1>;
 	}
+
 	return (
 		<div className="flex flex-col justify-center items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 			<img
-				className="w-90 h-30"
-				src={data.sprites.front_default}
-				alt=""
+				className="rounded-t-lg"
+				src={data?.sprites?.front_default}
+				alt="pokemon-sprite"
 			/>
 			<h4 className="underline self-start mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
 				Name:
 			</h4>
 			<p className="self-start font-normal text-gray-700 dark:text-gray-400 mb-10 ">
-				{data.name}
+				{data?.name}
 			</p>
 			<h3 className="underline self-start mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
 				Abilities:
 			</h3>
-			{data.abilities.map((element: any) => (
-				<p
-					key={element.ability.name}
-					className="self-start mb-3 font-normal text-gray-700 dark:text-gray-400"
-				>
-					{element.ability.name}
-				</p>
-			))}
+			{data &&
+				data?.abilities?.map((element: any) => (
+					<p
+						key={element.ability.name}
+						className="self-start mb-3 font-normal text-gray-700 dark:text-gray-400"
+					>
+						{element.ability.name}
+					</p>
+				))}
 
 			<form className="mt-4 w-full">
 				<p className="mb-2 mt-4 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">
@@ -91,12 +114,28 @@ function PokemonPage() {
 					<button
 						type="button"
 						className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-						onClick={() => refetch}
+						onClick={() => {
+							setPokemonName(search.toLocaleLowerCase());
+							setSearch(search);
+							refetch();
+						}}
+						disabled={search.length < 2}
 					>
 						Search
 					</button>
 				</div>
 			</form>
+			<button
+				type="button"
+				className="text-white mt-10 right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+				onClick={() => {
+					setPokemonName("");
+					setSearch(search);
+					refetch();
+				}}
+			>
+				Random
+			</button>
 		</div>
 	);
 }
