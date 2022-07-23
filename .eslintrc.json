@@ -19,13 +19,13 @@
 			{
 				"printWidth": 80,
 				"trailingComma": "es5",
-				"useTabs": true,
-				"tabWidth": 4
+				"tabWidth": 2
 			}
 		],
 		"react/react-in-jsx-scope": "off",
 		"camelcase": "error",
 		"quotes": ["error", "double"],
+		"indent": ["error", 2],
 		"no-duplicate-imports": "error",
 		"react/jsx-filename-extension": [
 			2,
