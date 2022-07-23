@@ -14,7 +14,7 @@ function PokemonPage() {
 		{
 			onSuccess: (successData) => {
 				if (successData?.count > 1) {
-					const randomIndex = Math.floor(Math.random() * 50);
+					const randomIndex = Math.floor(Math.random() * 900);
 					setPokemonName(randomIndex);
 				}
 			},
@@ -30,7 +30,7 @@ function PokemonPage() {
 
 	if (isError || data?.length === 0) {
 		return (
-			<div className="flex flex-col justify-center items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+			<div className="flex flex-col mt-60 items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 				<p className=" font-normal text-gray-700 dark:text-gray-400  ">
 					Something goes wront
 				</p>
@@ -51,36 +51,43 @@ function PokemonPage() {
 	}
 
 	if (isLoading) {
-		return <h1 className="text-white text-lg">LOADING...</h1>;
+		return (
+			<div className="flex flex-col mt-60 flex-wrap self-center content-center items-center">
+				<h1 className="text-white text-lg">LOADING...</h1>
+			</div>
+		);
 	}
 
 	return (
-		<div className="flex flex-col justify-center items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+		<div className="flex flex-col mt-20 flex-wrap self-center items-center w-3/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
 			<img
+				width="250"
+				height="250"
 				className="rounded-t-lg"
 				src={data?.sprites?.front_default}
 				alt="pokemon-sprite"
 			/>
-			<h4 className="underline self-start mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
+			<h4 className="underline  mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
 				Name:
 			</h4>
-			<p className="self-start font-normal text-gray-700 dark:text-gray-400 mb-10 ">
+			<p className=" font-normal text-gray-700 dark:text-gray-400 mb-10 ">
 				{data?.name}
 			</p>
-			<h3 className="underline self-start mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
+			<h3 className="underline  mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
 				Abilities:
 			</h3>
-			{data &&
-				data?.abilities?.map((element: any) => (
-					<p
-						key={element.ability.name}
-						className="self-start mb-3 font-normal text-gray-700 dark:text-gray-400"
-					>
-						{element.ability.name}
-					</p>
-				))}
-
-			<form className="mt-4 w-full">
+			<div className="flex flex-wrap">
+				{data &&
+					data?.abilities?.map((element: any) => (
+						<p
+							key={element.ability.name}
+							className="mr-3 font-normal text-gray-700 dark:text-gray-400"
+						>
+							{`${element.ability.name}`}
+						</p>
+					))}
+			</div>
+			<form className="mt-4 w-1/2">
 				<p className="mb-2 mt-4 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">
 					Search
 				</p>
