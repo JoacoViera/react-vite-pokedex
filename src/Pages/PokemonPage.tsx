@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
-import getPokemon from "../api/index";
+import { getPokemon } from "../api";
 
 function PokemonPage() {
   const [pokemonName, setPokemonName] = useState<number | string>("charmander");
@@ -28,7 +28,7 @@ function PokemonPage() {
 
   if (isError || data?.length === 0) {
     return (
-      <div className="flex flex-col mt-60 items-center w-2/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div className="flex flex-col mt-60 items-center w-2/5 p-10 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
         <p className=" font-normal text-gray-700 dark:text-gray-400  ">
           Something goes wront
         </p>
@@ -57,7 +57,7 @@ function PokemonPage() {
   }
 
   return (
-    <div className="flex flex-col mt-20 flex-wrap self-center items-center w-3/5 p-10 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+    <div className="flex flex-col bg-slate-900 items-center w-2/5 p-10 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
       <img
         width="250"
         height="250"
