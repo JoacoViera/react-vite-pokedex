@@ -7,10 +7,10 @@ const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="bg-slate-900 h-screen">
+    <div className="flex flex-col bg-slate-900 h-screen">
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <nav className="bg-white border-gray-200 dark:bg-gray-900">
+          <nav className="border-gray-200 dark:bg-gray-900">
             <div className="justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-2.5">
               <Link to="react-vite-pokedex/" className="flex items-center">
                 <img
@@ -68,7 +68,7 @@ function App() {
             </div>
           </nav>
 
-          <div className="flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center flex-grow">
             <Routes>
               <Route path="react-vite-pokedex" element={<ListPokemonsPage />} />
               <Route
@@ -78,8 +78,8 @@ function App() {
             </Routes>
           </div>
         </BrowserRouter>
-      </div>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 
