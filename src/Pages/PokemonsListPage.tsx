@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { PokemonCard, Button } from "../Components";
-
-const range = (start: number, stop: number) =>
-  Array.from({ length: stop - start }, (_, i) => start + i);
+import { range } from "../utils";
 
 export default function ListPokemonsPage() {
   const [pageSide, setPageSide] = useState(20);

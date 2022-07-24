@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPokemon } from "../api/index";
 import Spinner from "./Spinner";
+import { capitalize } from "../utils";
 
 export default function PokemonCard({ id }: any) {
   const { data, isLoading, isError } = useQuery(
@@ -9,8 +10,7 @@ export default function PokemonCard({ id }: any) {
     getPokemon,
     {}
   );
-  const capitalize = (word: string) =>
-    word.charAt(0).toUpperCase() + word.slice(1);
+
   if (isLoading || isError) return <Spinner />;
   return (
     <div
