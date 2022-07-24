@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPokemon } from "../api";
 import { Button, Spinner } from "../Components";
 
-function PokemonPage() {
+function PokemonDetailsPage() {
   const [pokemonName, setPokemonName] = useState<number | string>("charmander");
   const [search, setSearch] = useState("");
   const { data, isLoading, refetch, isError } = useQuery(
@@ -141,4 +141,4 @@ function PokemonPage() {
   );
 }
 
-export default PokemonPage;
+export default PokemonDetailsPage;

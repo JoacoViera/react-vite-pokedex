@@ -1,4 +1,4 @@
-import ListPokemonsPage from "./ListPokemonsPage";
-import PokemonPage from "./PokemonPage";
+import PokemonsListPage from "./PokemonsListPage";
+import PokemonDetailsPage from "./PokemonDetailsPage";
 
-export { ListPokemonsPage, PokemonPage };
+export { PokemonsListPage, PokemonDetailsPage };

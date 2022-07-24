@@ -1,7 +1,7 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Link, Routes } from "react-router-dom";
-import { PokemonPage, ListPokemonsPage } from "./Pages";
+import { PokemonDetailsPage, PokemonsListPage } from "./Pages";
 
 const queryClient = new QueryClient();
 
@@ -67,10 +67,10 @@ function App() {
 
           <div className="flex flex-col justify-center items-center flex-grow">
             <Routes>
-              <Route path="react-vite-pokedex" element={<ListPokemonsPage />} />
+              <Route path="react-vite-pokedex" element={<PokemonsListPage />} />
               <Route
                 path="react-vite-pokedex/search"
-                element={<PokemonPage />}
+                element={<PokemonDetailsPage />}
               />
             </Routes>
           </div>
