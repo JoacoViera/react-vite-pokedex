@@ -46,7 +46,7 @@ function PokemonPage() {
     );
   }
 
-  if (!isLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
