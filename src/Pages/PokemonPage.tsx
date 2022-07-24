@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { getPokemon } from "../api";
+import { Button, Spinner } from "../Components";
 
 function PokemonPage() {
   const [pokemonName, setPokemonName] = useState<number | string>("charmander");
@@ -28,32 +29,25 @@ function PokemonPage() {
 
   if (isError || data?.length === 0) {
     return (
-      <div className="flex flex-col mt-60 items-center w-2/5 p-10 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <p className=" font-normal text-gray-700 dark:text-gray-400  ">
-          Something goes wront
-        </p>
+      <div className="flex flex-col">
+        <h1 className="font-bold text-gray-900 dark:text-gray-400  ">
+          Something goes wrong
+        </h1>
 
-        <button
-          type="button"
-          className="text-white right-2.5 mt-10 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        <Button
+          title="Try Again"
           onClick={() => {
             setPokemonName("charmander");
             setSearch("");
             refetch();
           }}
-        >
-          Try Again
-        </button>
+        />
       </div>
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col mt-60 flex-wrap self-center content-center items-center">
-        <h1 className="text-white text-lg">LOADING...</h1>
-      </div>
-    );
+  if (!isLoading) {
+    return <Spinner />;
   }
 
   return (
@@ -119,28 +113,30 @@ function PokemonPage() {
           <button
             type="button"
             className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            disabled={search.length < 2}
+          >
+            Search
+          </button>
+          {/* <Button
+            title="Search"
             onClick={() => {
               setPokemonName(search.toLocaleLowerCase());
               setSearch(search);
               refetch();
             }}
             disabled={search.length < 2}
-          >
-            Search
-          </button>
+          /> */}
         </div>
       </form>
-      <button
-        type="button"
-        className="text-white mt-10 right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+
+      <Button
+        title="Random"
         onClick={() => {
           setPokemonName("");
           setSearch(search);
           refetch();
         }}
-      >
-        Random
-      </button>
+      />
     </div>
   );
 }
