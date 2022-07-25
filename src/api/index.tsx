@@ -1,8 +1,13 @@
 import axios from "axios";
 
-const getPokemon = async ({ queryKey }: any) => {
+interface QueryParams {
+  pageParam?: number;
+  queryKey: [string, number | string];
+}
+
+const getPokemon = async (params: QueryParams) => {
   try {
-    const url = `https://pokeapi.co/api/v2/pokemon/${queryKey[1]}`;
+    const url = `https://pokeapi.co/api/v2/pokemon/${params.queryKey[1]}`;
     const { data } = await axios.get(url);
     return data;
   } catch (error) {
@@ -10,9 +15,9 @@ const getPokemon = async ({ queryKey }: any) => {
   }
 };
 
-const getPokemonsList = async ({ queryKey }: any) => {
+const getPokemonsList = async (params: QueryParams) => {
   try {
-    const url = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${queryKey[1]}`;
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=20&offset=${params.queryKey[1]}`;
     const { data } = await axios.get(url);
     return data;
   } catch (error) {

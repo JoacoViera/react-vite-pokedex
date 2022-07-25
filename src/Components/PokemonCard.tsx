@@ -4,7 +4,10 @@ import { getPokemon } from "../api/index";
 import Spinner from "./Spinner";
 import { capitalize } from "../utils";
 
-export default function PokemonCard({ id }: any) {
+interface PokemonCardProps {
+  id: number;
+}
+export default function PokemonCard({ id }: PokemonCardProps) {
   const { data, isLoading, isError } = useQuery(
     ["GET_POKEMONS", id],
     getPokemon,

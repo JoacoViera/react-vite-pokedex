@@ -34,6 +34,7 @@
 		"no-unused-vars": 1,
 		"no-mixed-spaces-and-tabs": [2, "smart-tabs"],
 		"no-unused-expressions": ["error", { "enforceForJSX": true }],
+		"react/require-default-props":0,
 		"import/extensions": [
 			"error",
 			"ignorePackages",

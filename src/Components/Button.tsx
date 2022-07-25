@@ -1,10 +1,16 @@
 import React from "react";
 
+interface ButtonProps {
+  onClick: () => void;
+  title: string;
+  disabled?: boolean;
+}
+
 export default function Button({
   onClick = () => {},
   title = "",
   disabled = false,
-}: any) {
+}: ButtonProps) {
   return (
     <button
       type="button"

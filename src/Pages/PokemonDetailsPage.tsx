@@ -1,14 +1,44 @@
 import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import { getPokemon } from "../api";
 import { Button, Spinner } from "../Components";
 import { capitalize } from "../utils";
 
+interface Ability {
+  ability: {
+    name: string;
+    url: string;
+  };
+  is_hidden: boolean;
+  slot: number;
+  id: number;
+  weight: number;
+  order: number;
+}
+
+interface PokemonObject {
+  name: string;
+  count: number;
+  abilities: Ability[];
+  sprites: {
+    back_default: string;
+    back_shiny: string;
+    front_default: string;
+    front_shiny: string;
+  };
+  length: number;
+}
+
 function PokemonDetailsPage() {
   const [pokemonName, setPokemonName] = useState<number | string>("charmander");
   const [search, setSearch] = useState("");
-  const { data, isLoading, refetch, isError } = useQuery(
+  const {
+    data,
+    isLoading,
+    refetch,
+    isError,
+  }: UseQueryResult<PokemonObject, Error> = useQuery(
     ["GET_POKEMON", pokemonName],
     getPokemon,
     {
@@ -21,7 +51,7 @@ function PokemonDetailsPage() {
     }
   );
 
-  const handleInput = (event: any) => {
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     if (name === "pokemon-name") {
       setSearch(value);
@@ -100,7 +130,7 @@ function PokemonDetailsPage() {
           width="250"
           height="250"
           className="rounded-t-lg"
-          src={data?.sprites?.front_default}
+          src={data.sprites?.front_default}
           alt="pokemon-sprite"
         />
         <h4 className="mb-2 text-2xl font-bold tracking-tight text-gray-400 dark:text-white">
@@ -114,7 +144,7 @@ function PokemonDetailsPage() {
         </h3>
         <div className="flex flex-wrap">
           {data &&
-            data?.abilities?.map((element: any) => (
+            data?.abilities.map((element) => (
               <p
                 key={element.ability.name}
                 className="mr-3 font-normal text-gray-700 dark:text-gray-400"

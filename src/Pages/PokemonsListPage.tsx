@@ -17,7 +17,7 @@ export default function ListPokemonsPage() {
     setTo(to - pageSide);
   };
 
-  const handleInput = (event: any) => {
+  const handleInput = (event: React.ChangeEvent<HTMLSelectElement>) => {
     if (event.target.value !== "Page side") {
       const newValue = parseInt(event.target.value, 10);
       setPageSide(newValue);
@@ -37,7 +37,7 @@ export default function ListPokemonsPage() {
         <select
           id="pageSide"
           className="min-w-[10%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          onChange={handleInput}
+          onChange={(event) => handleInput(event)}
           defaultValue="Page side"
         >
           <option>Page side</option>
@@ -53,7 +53,7 @@ export default function ListPokemonsPage() {
       </div>
 
       <div className="flex flex-row flex-wrap bg-slate-900 justify-center pb-20">
-        {range(from, to).map((id: any) => (
+        {range(from, to).map((id: number) => (
           <PokemonCard key={id} id={id + 1} />
         ))}
       </div>
